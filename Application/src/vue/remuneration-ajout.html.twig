@@ -1,0 +1,94 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Ajout d'une rémunération {% endblock %}
+
+{% block contenu %}
+
+{% if form.valide is defined %}
+    {% if form.valide == true %}
+        {# <h1 class="h3 mb-3 font-weight-normal">Ajout réussi</h1> #}
+        <div id="snackbarSuccess">Ajout réussi.</div>
+        <script>
+            function showSnackbarSuccess() {
+                // Get the snackbar DIV
+                var x = document.getElementById("snackbarSuccess");
+
+                // Add the "show" class to DIV
+                x.className = "show";
+
+                // After 3 seconds, remove the show class from DIV
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+            }
+
+            showSnackbarSuccess();
+        </script>
+    {% else %}
+        <div id="snackbarFail">Échec de l'ajout en base.</div>
+        <script>
+            function showSnackbarFail() {
+                // Get the snackbar DIV
+                var x = document.getElementById("snackbarFail");
+    
+                // Add the "show" class to DIV
+                x.className = "show";
+
+                // After 3 seconds, remove the show class from DIV
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+            }
+    
+            showSnackbarFail();
+        </script>
+        {# <h1 class="h3 mb-3 font-weight-normal">{{ form.valide.message }}</h1> #}
+    {% endif %}
+{% else %}
+    <div class="content-body">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-form-center">Ajout d'une rémunération</h4>
+                    </div>
+                    <div class="card-body collapse in">
+                        <div class="card-block">
+
+                            <div class="card-text">
+                                <p>Renseignez les champs suivants afin d'ajouter une rémunération dans la base de données.</p>
+                            </div>
+
+                            <form class="form" action="index.php?page=remunerationajout" method="post" enctype="application/x-www-form-urlencoded">
+                                <div class="row">
+                                    <div class="col-md-6 offset-md-3">
+                                        <div class="form-body">
+                                            <div class="form-group">
+                                                <label for="inputCoutHoraire" class="sr-only">Coût horaire</label>
+                                                <input type="text" id="inputCoutHoraire" class="form-control" placeholder="Coût horaire"
+                                                    name="inputCoutHoraire" required autofocus>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions center">
+                                    <button type="button" class="btn btn-danger mr-1">
+                                        <a href="index.php?page=remuneration" class="ppe-btn-link">
+                                            <i class="icon-cross2"></i> Annuler
+                                        </a>
+                                    </button>
+                                    <button type="submit" name="btAjouter" class="btn btn-primary">
+                                        <span><i class="icon-check2"></i> Ajouter</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}

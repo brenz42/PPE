@@ -1,0 +1,128 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Ajout d'un développeur {% endblock %}
+
+{% block contenu %}
+
+{% if form.valide is defined %}
+{% if form.valide == true %}
+<h1 class="h3 mb-3 font-weight-normal">Ajout réussi</h1>
+{% else %}
+<h1 class="h3 mb-3 font-weight-normal">{{ form.valide.message }}</h1>
+{% endif %}
+{% else %}
+
+
+<div class="content-body">
+    <div class="row match-height">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" id="basic-layout-form-center">Ajout d'un développeur</h4>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+
+                        <div class="card-text">
+                            <p>Renseignez les champs suivants afin d'ajouter un développeur dans la base de données.</p>
+                        </div>
+
+                        <form class="form" action="index.php?page=developpeurajout" method="post" enctype="application/x-www-form-urlencoded">
+                            <div class="row">
+                                <div class="col-md-6 offset-md-3">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <label for="inputNom" class="sr-only">Nom</label>
+                                            <input type="text" id="inputNom" class="form-control" placeholder="Nom"
+                                                name="inputNom" required autofocus>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputPrenom" class="sr-only">Prénom</label>
+                                            <input type="text" id="inputPrenom" class="form-control" placeholder="Prenom"
+                                                name="inputPrenom" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputMail" class="sr-only">Adresse mail</label>
+                                            <input type="text" id="inputMail" class="form-control" placeholder="Adresse mail"
+                                                name="inputMail" required>
+                                        </div>
+
+                                        {# <div class="form-group">
+                                            <label for="inputMdp" class="sr-only">Mot de passe</label>
+                                            <input type="text" id="inputMdp" class="form-control" placeholder="Mot de passe"
+                                                name="inputMdp" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputConfMdp" class="sr-only">Confirmation du mot de passe</label>
+                                            <input type="text" id="inputConfMdp" class="form-control" placeholder="Confirmation du mot de passe"
+                                                name="inputConfMdp" required>
+                                        </div> #}
+
+                                        <div class="form-group">
+                                            <label for="inputIdRemuneration" class="sr-only">Rémunération du développeur</label>
+                                            <select name="inputIdRemuneration" class="form-control">
+                                                <option value="none" selected="" disabled="">Rémunération du développeur</option> 
+                                                {% for remu in listeRemuneration %}
+                                                    <option value="{{ remu.idremu }}">{{ remu.cout_horaire }}</option> 
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputIdRole" class="sr-only">Rôle du développeur</label>
+                                            <select name="inputIdRole" class="form-control">
+                                                <option value="none" selected="" disabled="">Rôle du développeur</option> 
+                                                {% for role in listeRole %}
+                                                    <option value="{{ role.idrole }}">{{ role.libelle }}</option> 
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">Compétences du développeur</h4>
+                                                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                                    <div class="heading-elements">
+                                                        <ul class="list-inline mb-0">
+                                                            <li><a data-action="collapse"><i class="icon-plus4"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body collapse" aria-expanded="false">
+                                                    <div class="card-block">
+                                                        <div class="text-xs-center">
+                                                            {% for comp in listeCompetence %}
+                                                                <input type="checkbox" name="competence[]" value="{{ comp.idcomp }}"> {{ comp.libelle }} - {{ comp.version }}<br>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions center">
+                                <button type="button" class="btn btn-danger mr-1">
+                                    <a href="index.php?page=developpeur" class="ppe-btn-link">
+                                        <i class="icon-cross2"></i> Annuler
+                                    </a>
+                                </button>
+                                <button type="submit" name="btAjouter" class="btn btn-primary">
+                                    <span><i class="icon-check2"></i> Ajouter</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

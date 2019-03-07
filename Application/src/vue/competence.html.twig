@@ -1,0 +1,64 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Gestion des compétences {% endblock %}
+
+{% block contenu %} 
+
+{% if form.valide is defined %}
+    {% if form.valide == true %}
+        <h1 class="h3 mb-3 font-weight-normal">{{ form.message }}</h1>
+    {% else %}
+        <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1>
+    {% endif %}
+{% endif %}
+
+<h1 class="ppe-h1-listing"> Gestion des compétences </h1>
+<a class="btn btn-green btn-min-width mr-1 mb-1 float-xs-right" href="index.php?page=competenceajout"
+    role="button">
+    <i class="icon-plus3"></i> Ajouter
+</a>
+
+<div class="panel">
+    <!-- Default panel contents -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="table-responsive ppe-table-responsive">
+                <table id="table" class="table table-hover table-striped table-bordered text-xs-center">
+                    <thead class="bg-primary">
+                        <tr class="text-uppercase white">
+                            <th class="no-filter">Libellé</th>
+                            <th class="no-filter">Version</th>
+                            <th class="nothing">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in liste %}
+                            <tr>
+                                <td>
+                                    {{ c.libelle }}
+                                </td>
+                                <td>
+                                    {{ c.version }}
+                                </td>
+                                <td>
+                                    <a class="btn btn-info btn-min-width mr-1 mb-1" 
+                                        href="index.php?page=competencemodif&idcomp={{ c.idcomp }}"
+                                        role="button">
+                                        <i class="icon-edit2"></i> Modifier
+                                    </a>
+                                    <a class="btn btn-danger btn-min-width mr-1 mb-1" 
+                                        href="index.php?page=competence&idcomp={{ c.idcomp }}"
+                                        role="button">
+                                        <i class="icon-trash-o"></i> Supprimer
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

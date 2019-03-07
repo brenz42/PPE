@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+{% block title %} {{ parent() }} - Tableau de bord {% endblock %}
+       
+{% block contenu %} 
+
+<h1 class="h3 mb-3 font-weight-normal">Vous êtes connecté sur le tableau de bord</h1>
+{% if session.role == 1 %}
+<div class="panel">
+    <div class="panel-heading background-violet">En tant qu'administrateur vous avez accès à :</div>
+    <div class="panel-body violet">
+        <ul>
+            <li><a href="index.php" class="violet">Accueil</a></li>
+            <li><a href="index.php?page=utilisateur" class="violet">Gestion des utilisateurs</a></li>
+            <li><a href="index.php?page=competence" class="violet">Gestion des compétences</a></li>
+            <li><a href="index.php?page=developpeur" class="violet">Gestion des développeurs</a></li>
+            <li><a href="index.php?page=equipe" class="violet">Gestion des équipes</a></li>
+            <li><a href="index.php?page=client" class="violet">Gestion des clients</a></li>
+            <li><a href="index.php?page=projet" class="violet">Gestion des projets</a></li>
+            <li><a href="index.php?page=tache" class="violet">Gestion des tâches</a></li>
+            <li><a href="index.php?page=contrat" class="violet">Gestion des contrats</a></li>
+        </ul>
+    </div>
+</div>
+{% else %}
+<div class="panel">
+    <div class="panel-heading background-violet">En tant qu'utilisateur vous avez accès à :</div>
+    <div class="panel-body violet">
+        <ul>
+            <li>Votre compte</li>
+            <li>Votre équipe</li>
+        </ul>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %} 
+

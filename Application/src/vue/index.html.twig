@@ -1,0 +1,256 @@
+{% extends "base.html.twig" %}
+{% block title %} {{ parent() }} - Tableau de bord {% endblock %}
+       
+{% block contenu %} 
+
+<div class="content-body">
+  <!-- Statistics -->
+  <div class="row">
+    <div class="col-xl-3 col-lg-6 col-xs-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="media">
+            <div class="p-2 text-xs-center bg-cyan bg-darken-2 media-left media-middle">
+              <i class="icon-camera7 font-large-2 white"></i>
+            </div>
+            <div class="p-2 bg-cyan white media-body">
+              <h5>New Products</h5>
+              <h5 class="text-bold-400">28</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-xs-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="media">
+            <div class="p-2 text-xs-center bg-deep-orange bg-darken-2 media-left media-middle">
+              <i class="icon-user1 font-large-2 white"></i>
+            </div>
+            <div class="p-2 bg-deep-orange white media-body">
+              <h5>New Users</h5>
+              <h5 class="text-bold-400">1,22,356</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-xs-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="media">
+            <div class="p-2 text-xs-center bg-teal bg-darken-2 media-left media-middle">
+              <i class="icon-cart font-large-2 white"></i>
+            </div>
+            <div class="p-2 bg-teal white media-body">
+              <h5>Commandes totales</h5>
+              <h5 class="text-bold-400">4,65,879</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-xs-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="media">
+            <div class="p-2 text-xs-center bg-pink bg-darken-2 media-left media-middle">
+              <i class="icon-banknote font-large-2 white"></i>
+            </div>
+            <div class="p-2 bg-pink white media-body">
+              <h5>Profits totaux</h5>
+              <h5 class="text-bold-400">{{ contSumCout }} €</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Statistics -->
+  <!-- Table des projets en cours -->
+  <div class="row">
+    {# <div class="col-xl-8 col-lg-12"> #}
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Projets en cours (Les 10 plus récents)</h4>
+          <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+              <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-block">
+            <p class="m-0">Total de projets en cours : {{ projCount }}
+              <span class="float-xs-right">
+                <a href="index.php?page=projet" target="_blank">Résumé des projets <i class="icon-arrow-right2"></i></a>
+              </span>
+            </p>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>Projet</th>
+                  <th>Client</th>
+                  <th>Équipe</th>
+                  <th>Priorité</th>
+                  <th>Progression</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in displayProjet %}
+                <tr>
+                  <td class="text-truncate">{{ p.Projet }}</td>
+                  <td class="text-truncate">
+                    <span class="avatar avatar-xs">
+                        <img src="Robust/app-assets/images/portrait/small/avatar-s-4.png" alt="Avatar client">
+                    </span>
+                    <span>{{ p.Client }}</span>
+                  </td>
+                  <td class="text-truncate">
+                    <span class="avatar avatar-xs">
+                      <img src="Robust/app-assets/images/portrait/small/avatar-s-4.png" alt="Avatar équipe">
+                    </span>
+                    <span>{{ p.Equipe }}</span>
+                  </td>
+                  <td class="text-truncate"><span class="tag tag-{{ p.CouleurPrio }}">{{ p.Priorité }}</span></td>
+                  <td class="valign-middle">
+                    <progress value="{{ p.Progression }}" max="100" class="progress progress-xs progress-{{ p.CouleurProgr }} m-0">{{ p.Progression }}%</progress>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-xl-4 col-lg-12">
+            <div class="card bg-cyan">
+              <div class="card-body">
+                <div class="card-block">
+                  <div class="media">
+                    <div class="media-left media-middle">
+                      <i class="icon-pencil white font-large-2 float-xs-left"></i>
+                    </div>
+                    <div class="media-body white text-xs-right">
+                      <h3>278</h3>
+                      <span>New Posts</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card bg-teal">
+              <div class="card-body">
+                <div class="card-block">
+                  <div class="media">
+                    <div class="media-body white text-xs-left">
+                      <h3>156</h3>
+                      <span>New Clients</span>
+                    </div>
+                    <div class="media-right media-middle">
+                      <i class="icon-user1 white font-large-2 float-xs-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card bg-deep-orange">
+              <div class="card-body">
+                <div class="card-block">
+                  <div class="media">
+                    <div class="media-left media-middle">
+                      <i class="icon-chat1 white font-large-2 float-xs-left"></i>
+                    </div>
+                    <div class="media-body white text-xs-right">
+                      <h3>156</h3>
+                      <span>New Comments</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card bg-cyan">
+              <div class="card-body">
+                <div class="card-block">
+                  <div class="media">
+                    <div class="media-body white text-xs-left">
+                      <h3>423</h3>
+                      <span>Support Tickets</span>
+                    </div>
+                    <div class="media-right media-middle">
+                      <i class="icon-ios-help-outline white font-large-2 float-xs-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+  </div>
+  <!-- Table des tâches en cours -->
+  <div class="row">
+    {# <div class="col-xl-8 col-lg-12"> #}
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Tâches en cours (Les 10 plus récentes)</h4>
+          <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+              <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-block">
+            <p class="m-0">Total de tâches en cours : {{ tacCount }}
+              <span class="float-xs-right">
+                <a href="index.php?page=tache" target="_blank">Résumé des tâches <i class="icon-arrow-right2"></i></a>
+              </span>
+            </p>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>Tâche</th>
+                  <th>Projet</th>
+                  <th>Développeur</th>
+                  <th>Priorité</th>
+                  <th>Progression</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for t in displayTache %}
+                <tr>
+                  <td class="text-truncate">{{ t.Tâche }}</td>
+                  <td class="text-truncate">{{ t.Projet }}</td>
+                  <td class="text-truncate">
+                    <span class="avatar avatar-xs">
+                      <img src="Robust/app-assets/images/portrait/small/avatar-s-4.png" alt="Avatar développeur">
+                    </span>
+                    <span>{{ t.Prénom }} {{ t.Nom }}</span>
+                  </td>
+                  <td class="text-truncate"><span class="tag tag-{{ t.CouleurPrio }}">{{ t.Priorité }}</span></td>
+                  <td class="valign-middle">
+                    <progress value="{{ t.Progression }}" max="100" class="progress progress-xs progress-{{ t.CouleurProg }} m-0">{{ t.Progression }}%</progress>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} 

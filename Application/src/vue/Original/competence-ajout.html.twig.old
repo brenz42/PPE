@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Ajout d'une compétence {% endblock %}
+       
+{% block contenu %} <h1> Ajout d'une compétence </h1> 
+
+{% if form.valide is defined %} 
+    {% if form.valide == true %}
+       <h1 class="h3 mb-3 font-weight-normal">Ajout réussi</h1>
+    {% else %} 
+       <h1 class="h3 mb-3 font-weight-normal">{{ form.valide.message }}</h1> 
+    {% endif %}     
+{% else %}      
+    
+<div class="panel-body">
+  <form  class="form-signin" action="index.php?page=competenceajout" method="post" enctype="application/x-www-form-urlencoded">
+    <label for="inputDesignation" class="sr-only">Libellé : </label>
+    <input type="text" id="inputLibelle" name="inputLibelle" class="form-control" placeholder="Saisir un libellé" required autofocus>
+    <label for="inputVersion" class="sr-only">Version : </label>
+    <select name="inputVersion" class="form-control">
+        <option value="non">Version non identifiée</option> 
+        {% for r in form.liste %}
+            <option value="{{ r.version }}">{{ r.version }}</option> 
+        {% endfor %}    
+    </select>    
+    <button class="btn btn-lg btn-primary btn-block" type="submit" name="btAjouter">Ajouter</button>
+  </form>
+</div>    
+{% endif %}
+{% endblock %} 

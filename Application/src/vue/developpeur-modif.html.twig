@@ -1,0 +1,104 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Modification d'un développeur {% endblock %}
+
+{% block contenu %}
+
+{% if form.valide is defined %}
+    {% if form.valide == true %}
+        <h1 class="h3 mb-3 font-weight-normal">Modification réussie</h1>
+    {% else %}
+        <h1 class="h3 mb-3 font-weight-normal">{{ form.valide.message }}</h1>
+    {% endif %}
+{% else %}
+<div class="content-body">
+    <div class="row match-height">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" id="basic-layout-form-center">Modification du développeur : {{ displayDev.prenom }} {{ displayDev.nom }}</h4>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+
+                        <div class="card-text">
+                            <p>Renseignez les champs suivants afin de modifier le développeur {{ displayDev.prenom }} {{ displayDev.nom }} dans la base de données.</p>
+                        </div>
+
+                        <form class="form" action="index.php?page=developpeurmodif&iddev={{ displayDev.iddev }}" method="post" enctype="application/x-www-form-urlencoded">
+                            <div class="row">
+                                <div class="col-md-6 offset-md-3">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <label for="inputNom" class="sr-only">Nom</label>
+                                            <input type="text" id="inputNom" class="form-control" placeholder="Nom"
+                                                name="inputNom" value="{{ displayDev.nom }}" required autofocus>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputPrenom" class="sr-only">Prénom</label>
+                                            <input type="text" id="inputPrenom" class="form-control" placeholder="Prenom"
+                                                name="inputPrenom" value="{{ displayDev.prenom }}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputMail" class="sr-only">Adresse mail</label>
+                                            <input type="text" id="inputMail" class="form-control" placeholder="Adresse mail"
+                                                name="inputMail" value="{{ displayDev.mail }}" required>
+                                        </div>
+
+                                        {# <div class="form-group">
+                                            <label for="inputMdp" class="sr-only">Mot de passe</label>
+                                            <input type="text" id="inputMdp" class="form-control" placeholder="Mot de passe"
+                                                name="inputMdp" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputConfMdp" class="sr-only">Confirmation du mot de passe</label>
+                                            <input type="text" id="inputConfMdp" class="form-control" placeholder="Confirmation du mot de passe"
+                                                name="inputConfMdp" required>
+                                        </div> #}
+
+                                        <div class="form-group">
+                                            <label for="inputIdRemuneration" class="sr-only">Rémunération du développeur</label>
+                                            <select name="inputIdRemuneration" class="form-control">
+                                                <option value="{{ displayDev.idremu }}" selected="">{{ displayDev.idremu }}</option> 
+                                                {% for remu in listeRemuneration %}
+                                                    <option value="{{ remu.idremu }}">{{ remu.cout_horaire }}</option> 
+                                                {% endfor %}    
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputIdRole" class="sr-only">Rôle du développeur</label>
+                                            <select name="inputIdRole" class="form-control">
+                                                <option value="{{ displayDev.idrole }}" selected="">{{ displayDev.libelle }}</option> 
+                                                {% for role in listeRole %}
+                                                    <option value="{{ role.idrole }}">{{ role.libelle }}</option> 
+                                                {% endfor %}    
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions center">
+                                <button type="button" class="btn btn-danger mr-1">
+                                    <a href="index.php?page=developpeur" class="ppe-btn-link">
+                                        <i class="icon-cross2"></i> Annuler
+                                    </a>
+                                </button>
+                                <button type="submit" name="btModifier" class="btn btn-primary">
+                                    <span><i class="icon-check2"></i> Modifier</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

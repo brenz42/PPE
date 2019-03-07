@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Profil {% endblock %}
+
+{% block contenu %}
+{# Rôles : 0 = utilisateur / 1 = admin / 2 = entreprise-cliente / 3 = developpeur #}
+
+{% if session.role == 1 %} 
+<div class="main-menu-header">
+  <p class="primary darken-3 text-xs-center font-medium-2"><strong><i class="icon-wrench3"></i> Profil administration</strong></p>
+</div>
+<p>Profil de {{ session.prenom }} {{ session.nom }}</p>
+
+{% elseif session.role == 2 %}
+<div class="main-menu-header">
+  <p class="amber darken-3 text-xs-center font-medium-2"><strong><i class="icon-office"></i> Profil client</strong></p>
+</div>
+<p>Profil de {{ session.prenom }} {{ session.nom }}</p>
+
+{% elseif session.role == 3 %}
+<div class="main-menu-header">
+  <p class="blue darken-3 text-xs-center font-medium-2"><strong><i class="icon-user-tie"></i> Profil développeur</strong></p>
+</div>
+<p>Profil de {{ session.prenom }} {{ session.nom }}</p>
+{% endif %}
+
+{% endblock %}
