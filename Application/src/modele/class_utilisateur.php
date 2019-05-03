@@ -6,6 +6,7 @@ class Utilisateur
     private $insert;
     private $connect;
     private $select;
+    private $selectById;
     private $selectByEmail;
     private $selectCount;
     private $update;
@@ -15,23 +16,23 @@ class Utilisateur
     public function __construct($db)
     {
         $this->db = $db;
-        $this->insert = $db->prepare("INSERT INTO utilisateur(email, mdp, nom, prenom, idrole) VALUES (:email, :mdp, :nom, :prenom, :role)");
-        $this->connect = $db->prepare("SELECT email, idrole, mdp FROM utilisateur WHERE email=:email");
-        $this->select = $db->prepare("SELECT email, u.idrole, nom, prenom, r.libelle AS role 
-                                    FROM utilisateur u, role r 
-                                    WHERE u.idrole = r.idrole 
-                                    ORDER BY nom");
-        $this->selectByEmail = $db->prepare("SELECT email, nom, prenom, idrole FROM utilisateur WHERE email=:email");
+        $this->insert = $db->prepare("INSERT INTO utilisateur(email, mdp, idrole) VALUES (:email, :mdp, :idrole)");
+        $this->connect = $db->prepare("SELECT idUtilisateur, email, mdp, idrole FROM utilisateur WHERE email = :email");
+        $this->select = $db->prepare("SELECT email, r.libelle AS role 
+                                    FROM utilisateur u 
+                                    LEFT JOIN role r ON u.idrole = r.idrole");
+        $this->selectById = $db->prepare("SELECT idUtilisateur, email, idrole FROM utilisateur WHERE idUtilisateur = :idUtilisateur");
+        $this->selectByEmail = $db->prepare("SELECT idUtilisateur, email, idrole FROM utilisateur WHERE email = :email");
         $this->selectCount = $db->prepare("SELECT COUNT(1) FROM utilisateur");
-        $this->update = $db->prepare("UPDATE utilisateur SET nom=:nom, prenom=:prenom, idrole=:role WHERE email=:email");
-        $this->updateMdp = $db->prepare("UPDATE utilisateur SET mdp=:mdp WHERE email=:email");
-        $this->delete = $db->prepare("DELETE FROM utilisateur WHERE email=:id");
+        $this->update = $db->prepare("UPDATE utilisateur SET email = :email, idrole = :idrole WHERE idUtilisateur = :idUtilisateur");
+        $this->updateMdp = $db->prepare("UPDATE utilisateur SET mdp = :mdp WHERE idUtilisateur = :idUtilisateur");
+        $this->delete = $db->prepare("DELETE FROM utilisateur WHERE idUtilisateur = :idUtilisateur");
     }
 
-    public function insert($email, $mdp, $role, $nom, $prenom)
+    public function insert($email, $mdp, $idrole)
     {
         $r = true;
-        $this->insert->execute(array(':email' => $email, ':mdp' => $mdp, ':role' => $role, ':nom' => $nom, ':prenom' => $prenom));
+        $this->insert->execute(array(':email' => $email, ':mdp' => $mdp, ':idrole' => $idrole));
 
         if ($this->insert->errorCode() != 0) 
         {
@@ -44,7 +45,7 @@ class Utilisateur
 
     public function connect($email)
     {
-        $unUtilisateur = $this->connect->execute(array(':email' => $email));
+        $this->connect->execute(array(':email' => $email));
 
         if ($this->connect->errorCode() != 0) 
         {
@@ -64,6 +65,18 @@ class Utilisateur
         }
 
         return $this->select->fetchAll();
+    }
+
+    public function selectById($idUtilisateur)
+    {
+        $this->selectById->execute(array(':idUtilisateur' => $idUtilisateur));
+
+        if ($this->selectById->errorCode() != 0) 
+        {
+            print_r($this->selectById->errorInfo());
+        }
+
+        return $this->selectById->fetch();
     }
 
     public function selectByEmail($email)
@@ -90,10 +103,10 @@ class Utilisateur
        return $this->selectCount->fetchColumn();
     }
 
-    public function update($email, $role, $nom, $prenom)
+    public function update($idUtilisateur, $email, $idrole)
     {
         $r = true;
-        $this->update->execute(array(':email' => $email, ':role' => $role, ':nom' => $nom, ':prenom' => $prenom));
+        $this->update->execute(array(':idUtilisateur' => $idUtilisateur, ':email' => $email, ':idrole' => $idrole));
 
         if ($this->update->errorCode() != 0) 
         {
@@ -104,10 +117,10 @@ class Utilisateur
         return $r;
     }
 
-    public function updateMdp($email, $mdp)
+    public function updateMdp($idUtilisateur, $mdp)
     {
         $r = true;
-        $this->updateMdp->execute(array(':email' => $email, ':mdp' => $mdp));
+        $this->updateMdp->execute(array(':idUtilisateur' => $idUtilisateur, ':mdp' => $mdp));
 
         if ($this->update->errorCode() != 0) 
         {
@@ -118,10 +131,10 @@ class Utilisateur
         return $r;
     }
 
-    public function delete($id)
+    public function delete($idUtilisateur)
     {
         $r = true;
-        $this->delete->execute(array(':id' => $id));
+        $this->delete->execute(array(':idUtilisateur' => $idUtilisateur));
 
         if ($this->delete->errorCode() != 0) 
         {

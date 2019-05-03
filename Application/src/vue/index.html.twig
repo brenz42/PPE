@@ -45,7 +45,7 @@
             </div>
             <div class="p-2 bg-teal white media-body">
               <h5>Commandes totales</h5>
-              <h5 class="text-bold-400">4,65,879</h5>
+              <h5 class="text-bold-400">{{ contCount }}</h5>
             </div>
           </div>
         </div>
@@ -118,7 +118,7 @@
                     </span>
                     <span>{{ p.Equipe }}</span>
                   </td>
-                  <td class="text-truncate"><span class="tag tag-{{ p.CouleurPrio }}">{{ p.Priorité }}</span></td>
+                  <td class="text-truncate"><span class="tag tag-{{ p.CouleurPrio }}">{{ p.Priorite }}</span></td>
                   <td class="valign-middle">
                     <progress value="{{ p.Progression }}" max="100" class="progress progress-xs progress-{{ p.CouleurProgr }} m-0">{{ p.Progression }}%</progress>
                   </td>
@@ -130,68 +130,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="col-xl-4 col-lg-12">
-            <div class="card bg-cyan">
-              <div class="card-body">
-                <div class="card-block">
-                  <div class="media">
-                    <div class="media-left media-middle">
-                      <i class="icon-pencil white font-large-2 float-xs-left"></i>
-                    </div>
-                    <div class="media-body white text-xs-right">
-                      <h3>278</h3>
-                      <span>New Posts</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card bg-teal">
-              <div class="card-body">
-                <div class="card-block">
-                  <div class="media">
-                    <div class="media-body white text-xs-left">
-                      <h3>156</h3>
-                      <span>New Clients</span>
-                    </div>
-                    <div class="media-right media-middle">
-                      <i class="icon-user1 white font-large-2 float-xs-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card bg-deep-orange">
-              <div class="card-body">
-                <div class="card-block">
-                  <div class="media">
-                    <div class="media-left media-middle">
-                      <i class="icon-chat1 white font-large-2 float-xs-left"></i>
-                    </div>
-                    <div class="media-body white text-xs-right">
-                      <h3>156</h3>
-                      <span>New Comments</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card bg-cyan">
-              <div class="card-body">
-                <div class="card-block">
-                  <div class="media">
-                    <div class="media-body white text-xs-left">
-                      <h3>423</h3>
-                      <span>Support Tickets</span>
-                    </div>
-                    <div class="media-right media-middle">
-                      <i class="icon-ios-help-outline white font-large-2 float-xs-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
   </div>
   <!-- Table des tâches en cours -->
   <div class="row">

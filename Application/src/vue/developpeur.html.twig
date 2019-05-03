@@ -28,8 +28,8 @@
                         <tr class="text-uppercase white">
                             <th class="no-filter">Nom</th>
                             <th class="no-filter">Adresse e-mail</th>
-                            <th class="no-filter">Taux rémunération</th>
                             <th class="no-filter">Coût horaire</th>
+                            <th class="no-filter">Equipe</th>
                             <th class="nothing">Actions</th>
                         </tr>
                     </thead>
@@ -40,13 +40,13 @@
                                 {{ d.prenom }} {{ d.nom }}
                             </td>
                             <td>
-                                {{ d.mail }}
-                            </td>
-                            <td>
-                                {{ d.idremu }}
+                                {{ d.email }}
                             </td>
                             <td>
                                 {{ d.cout_horaire }}
+                            </td>
+                            <td>
+                                {{ d.Equipe }}
                             </td>
                             <td>
                                 <a class="btn btn-info btn-min-width mr-1 mb-1" 

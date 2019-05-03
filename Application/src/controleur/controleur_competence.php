@@ -5,12 +5,14 @@ function actionCompetence($twig, $db)
 {
     $form = array();
     $competence = new Competence($db);
+    $devComp = new Developpeur_Competence($db);
 
     if (isset($_GET['idcomp'])) 
     {
+        $exec1 = $devComp->deleteByIdComp($_GET['idcomp']);
         $exec = $competence->delete($_GET['idcomp']);
 
-        if (!$exec) 
+        if (!$exec && !$exec1) 
         {
             $form['valide'] = false;
             $form['message'] = 'Problème de suppression dans la table compétence';
@@ -72,9 +74,6 @@ function actionCompetenceModif($twig, $db)
         if ($uneCompetence != NULL) 
         {
             $displayComp = $uneCompetence;
-            // $developpeur = new Developpeur($db);
-            // $liste = $developpeur->select();
-            // $form['liste'] = $liste;
         } 
         else 
         {

@@ -5,13 +5,12 @@
 {% block contenu %}
 
 {% if form.valide is defined %}
-{% if form.valide == true %}
-<h1 class="h3 mb-3 font-weight-normal">Ajout réussi</h1>
+    {% if form.valide == true %}
+        <h1 class="h3 mb-3 font-weight-normal">Ajout réussi</h1>
+    {% else %}
+        <h1 class="h3 mb-3 font-weight-normal">{{ form.valide.message }}</h1>
+    {% endif %}
 {% else %}
-<h1 class="h3 mb-3 font-weight-normal">{{ form.valide.message }}</h1>
-{% endif %}
-{% else %}
-
 
 <div class="content-body">
     <div class="row match-height">
@@ -39,27 +38,27 @@
 
                                         <div class="form-group">
                                             <label for="inputPrenom" class="sr-only">Prénom</label>
-                                            <input type="text" id="inputPrenom" class="form-control" placeholder="Prenom"
+                                            <input type="text" id="inputPrenom" class="form-control" placeholder="Prénom"
                                                 name="inputPrenom" required>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="inputMail" class="sr-only">Adresse mail</label>
-                                            <input type="text" id="inputMail" class="form-control" placeholder="Adresse mail"
-                                                name="inputMail" required>
+                                            <label for="inputEmail" class="sr-only">Adresse mail</label>
+                                            <input type="email" id="inputEmail" class="form-control" placeholder="Adresse mail"
+                                                name="inputEmail" required>
                                         </div>
 
-                                        {# <div class="form-group">
+                                        <div class="form-group">
                                             <label for="inputMdp" class="sr-only">Mot de passe</label>
-                                            <input type="text" id="inputMdp" class="form-control" placeholder="Mot de passe"
+                                            <input type="password" id="inputMdp" class="form-control" placeholder="Mot de passe"
                                                 name="inputMdp" required>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="inputConfMdp" class="sr-only">Confirmation du mot de passe</label>
-                                            <input type="text" id="inputConfMdp" class="form-control" placeholder="Confirmation du mot de passe"
+                                            <input type="password" id="inputConfMdp" class="form-control" placeholder="Confirmation du mot de passe"
                                                 name="inputConfMdp" required>
-                                        </div> #}
+                                        </div>
 
                                         <div class="form-group">
                                             <label for="inputIdRemuneration" class="sr-only">Rémunération du développeur</label>
@@ -72,15 +71,15 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="inputIdRole" class="sr-only">Rôle du développeur</label>
-                                            <select name="inputIdRole" class="form-control">
-                                                <option value="none" selected="" disabled="">Rôle du développeur</option> 
-                                                {% for role in listeRole %}
-                                                    <option value="{{ role.idrole }}">{{ role.libelle }}</option> 
+                                            <label for="inputIdEquipe" class="sr-only">Équipe du développeur</label>
+                                            <select name="inputIdEquipe" class="form-control">
+                                                <option value="none" selected="" disabled="">Équipe du développeur</option> 
+                                                {% for equi in listeEquipe %}
+                                                    <option value="{{ equi.idequi }}">{{ equi.libelle }}</option> 
                                                 {% endfor %}
                                             </select>
                                         </div>
-
+                                        
                                         <div class="form-group">
                                             <div class="card">
                                                 <div class="card-header">

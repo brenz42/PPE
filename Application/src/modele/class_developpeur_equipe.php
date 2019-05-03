@@ -12,14 +12,14 @@ class Developpeur_Equipe{
 
     public function __construct($db){
         $this->db = $db;
-        $this->insert = $db->prepare("insert into developpeur_equipe(iddev, idequi) values (:iddev, :idequi)");
-        $this->select = $db->prepare("select equipe.libelle, , developpeur.nom, developpeur.prenom from developpeur_equipe, equipe, developpeur where developpeur.iddev=developpeur_equipe.iddev and equipe.idequi=developpeur_equipe.idequi");
-        $this->delete = $db->prepare("delete from developpeur_equipe where iddev=:iddev and idequi=:idequi");
-        $this->update = $db->prepare("update developpeur_equipe set idequi=:idequi, iddev=:iddev");
-        $this->selectByIdDev = $db->prepare("select equipe.libelle, developpeur.nom, developpeur.prenom from developpeur_equipe, equipe, developpeur where developpeur_equipe.iddev=:iddev and developpeur.iddev=developpeur_equipe.iddev and equipe.idequi=developpeur_equipe.idequi order by equipe.libelle");
-        $this->selectByIdEqui  =$db->prepare("select equipe.libelle, developpeur.nom, developpeur.prenom from developpeur_equipe, equipe, developpeur where developpeur_equipe.idequi=:idequi and developpeur.iddev=developpeur_equipe.iddev and equipe.idequi=developpeur_equipe.idequi order by equipe.libelle");
-        $this->deleteByIdDev = $db->prepare("delete from developpeur_equipe where iddev=:iddev");
-        $this->deleteByIdEqui = $db->prepare("delete from developpeur_equipe where idequi=:idequi");
+        $this->insert = $db->prepare("INSERT INTO developpeur_equipe(iddev, idequi) VALUES (:iddev, :idequi)");
+        $this->select = $db->prepare("SELECT equipe.libelle, developpeur.nom, developpeur.prenom FROM developpeur_equipe, equipe, developpeur WHERE developpeur.iddev = developpeur_equipe.iddev AND equipe.idequi = developpeur_equipe.idequi");
+        $this->delete = $db->prepare("DELETE FROM developpeur_equipe WHERE iddev=:iddev AND idequi=:idequi");
+        $this->update = $db->prepare("UPDATE developpeur_equipe SET idequi=:idequi, iddev=:iddev");
+        $this->selectByIdDev = $db->prepare("SELECT equipe.libelle, developpeur.nom, developpeur.prenom FROM developpeur_equipe, equipe, developpeur WHERE developpeur_equipe.iddev = :iddev AND developpeur.iddev = developpeur_equipe.iddev AND equipe.idequi = developpeur_equipe.idequi ORDER BY equipe.libelle");
+        $this->selectByIdEqui  =$db->prepare("SELECT equipe.libelle, developpeur.nom, developpeur.prenom FROM developpeur_equipe, equipe, developpeur WHERE developpeur_equipe.idequi = :idequi AND developpeur.iddev = developpeur_equipe.iddev AND equipe.idequi = developpeur_equipe.idequi ORDER BY equipe.libelle");
+        $this->deleteByIdDev = $db->prepare("DELETE FROM developpeur_equipe WHERE iddev=:iddev");
+        $this->deleteByIdEqui = $db->prepare("DELETE FROM developpeur_equipe WHERE idequi=:idequi");
     }
 
     public function insert($iddev , $idequi){

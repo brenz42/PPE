@@ -15,7 +15,8 @@ class Developpeur_Competence
     private $selectCount;
     private $insert;
     private $update;
-    private $delete;
+    private $deleteByIdDev;
+    private $deleteByIdComp;
     #endregion
 
     #region Constructor
@@ -40,7 +41,8 @@ class Developpeur_Competence
         $this->selectCount = $db->prepare("SELECT COUNT(*) FROM developpeur_competence");
         $this->insert = $db->prepare("INSERT INTO developpeur_competence (iddev, idcomp) VALUES (:iddev, :idcomp)");
         $this->update = $db->prepare("UPDATE developpeur_competence SET iddev = :iddev, idcomp = :idcomp WHERE developpeur_competence.iddevcomp = :iddevcomp");
-        $this->delete = $db->prepare("DELETE FROM developpeur_competence WHERE developpeur_competence.iddevcomp = :iddevcomp");
+        $this->deleteByIdDev = $db->prepare("DELETE FROM developpeur_competence WHERE developpeur_competence.iddev = :iddev");
+        $this->deleteByIdComp = $db->prepare("DELETE FROM developpeur_competence WHERE developpeur_competence.idcomp = :idcomp");
     }
     #endregion
 
@@ -139,18 +141,33 @@ class Developpeur_Competence
         return $r;
     }
 
-    public function delete($iddevcomp) 
+    public function deleteByIdDev($iddev) 
     {
         $r = true;
 
-        $this->delete->execute(array(':iddevcomp'=>$iddevcomp));
+        $this->deleteByIdDev->execute(array(':iddev' => $iddev));
 
-        if ($this->delete->errorCode() != 0) 
+        if ($this->deleteByIdDev->errorCode() != 0) 
         {
-            print_r($this->delete->errorInfo());
+            print_r($this->deleteByIdDev->errorInfo());
             $r = false;
         }
-        
+
+        return $r;
+    }
+
+    public function deleteByIdComp($idcomp) 
+    {
+        $r = true;
+
+        $this->deleteByIdComp->execute(array(':idcomp' => $idcomp));
+
+        if ($this->deleteByIdComp->errorCode() != 0) 
+        {
+            print_r($this->deleteByIdComp->errorInfo());
+            $r = false;
+        }
+
         return $r;
     }
 

@@ -21,13 +21,18 @@ class Projet
         $this->select = $db->prepare("SELECT  FROM  ORDER BY "); // TO-DO
         $this->selectById = $db->prepare("SELECT  FROM  WHERE "); // TO-DO
         $this->selectCount = $db->prepare("SELECT COUNT(1) FROM projet");
-        $this->selectForDashboard = $db->prepare("SELECT tpro.libelle AS Projet, tent.nom AS Client, tequi.libelle AS Equipe, tprio.libelle AS Priorité, tprio.couleur AS CouleurPrio, tprogr.valeur AS Progression, tprogr.couleur AS CouleurProgr
+        // Sélection des 10 projets les plus récents pour les afficher sur la page d'accueil (Tableau de bord)
+        $this->selectForDashboard = $db->prepare("SELECT tpro.libelle AS Projet, tent.nom AS Client, tequi.libelle AS Equipe, 
+                                                        tprio.libelle AS Priorite, tprio.couleur AS CouleurPrio, 
+                                                        tprogr.valeur AS Progression, tprogr.couleur AS CouleurProgr
                                                 FROM projet tpro
                                                 LEFT OUTER JOIN equipe tequi ON tpro.idequi = tequi.idequi
                                                 LEFT OUTER JOIN contrat tcon ON tcon.idcontrat = tpro.idcontrat
                                                 LEFT OUTER JOIN entreprise_cliente tent ON tent.ident = tcon.ident
                                                 LEFT OUTER JOIN priorite tprio ON tprio.idprio = tpro.idpriorite
-                                                LEFT OUTER JOIN progression tprogr ON tprogr.idprogr = tpro.idprogression");
+                                                LEFT OUTER JOIN progression tprogr ON tprogr.idprogr = tpro.idprogression
+                                                ORDER BY tcon.date_signature DESC
+                                                LIMIT 10");
         $this->insert = $db->prepare("INSERT INTO  VALUES "); // TO-DO
         $this->update = $db->prepare("UPDATE  SET  WHERE "); // TO-DO
         $this->delete = $db->prepare("DELETE FROM  WHERE "); // TO-DO

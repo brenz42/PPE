@@ -5,17 +5,17 @@ function actionUtilisateur($twig, $db)
   $form = array();
   $utilisateur = new Utilisateur($db);
 
-  if (isset($_GET['id'])) 
+  if (isset($_GET['idUtilisateur'])) 
   {
         /* Nous vérifions que l'utilisateur n'est pas responsable d'une équipe
            Car nous n'avons pas souhaité faire un DELETE ON CASCADE  
      */
     $equipe = new Equipe($db);
-    $liste = $equipe->selectByIdResponsable($_GET['id']);
+    $liste = $equipe->selectByIdResponsable($_GET['idUtilisateur']);
 
     if ($liste == null) 
     {
-      $exec = $utilisateur->delete($_GET['id']);
+      $exec = $utilisateur->delete($_GET['idUtilisateur']);
 
       if (!$exec) 
       {
@@ -42,10 +42,10 @@ function actionUtilisateur($twig, $db)
 function actionUtilisateurModif($twig, $db)
 {
   $form = array();
-  if (isset($_GET['id']))
+  if (isset($_GET['idUtilisateur']))
   {
     $utilisateur = new Utilisateur($db);
-    $unUtilisateur = $utilisateur->selectByEmail($_GET['id']);
+    $unUtilisateur = $utilisateur->selectById($_GET['idUtilisateur']);
 
     if ($unUtilisateur != null) 
     {
@@ -64,11 +64,11 @@ function actionUtilisateurModif($twig, $db)
     if (isset($_POST['btModifier'])) 
     {
       $utilisateur = new Utilisateur($db);
-      $nom = $_POST['nom'];
-      $prenom = $_POST['prenom'];
-      $role = $_POST['role'];
+      $idUtilisateur = $_GET['idUtilisateur'];
       $email = $_POST['email'];
-      $exec = $utilisateur->update($email, $role, $nom, $prenom);
+      $idrole = $_POST['idrole'];
+
+      $exec = $utilisateur->update($idUtilisateur, $email, $idrole);
 
       if (!$exec) 
       {

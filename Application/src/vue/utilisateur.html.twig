@@ -27,8 +27,6 @@
                 <table id="table" class="table table-hover table-striped table-bordered text-xs-center">
                     <thead class="bg-primary">
                         <tr class="text-uppercase white">
-                            <th class="no-filter">Nom</th>
-                            <th class="no-filter">Prénom</th>
                             <th class="no-filter">Email</th>
                             <th>Rôle</th>
                             <th class="nothing">Actions</th>
@@ -37,12 +35,6 @@
                     <tbody>
                         {% for u in liste %}
                             <tr>
-                                <td>
-                                    {{ u.nom }}
-                                </td>
-                                <td>
-                                    {{ u.prenom }}
-                                </td>
                                 <td>
                                     {{ u.email }}
                                 </td>

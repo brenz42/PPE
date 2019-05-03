@@ -4,37 +4,58 @@ function actionDeveloppeur($twig, $db)
 {
     $form = array(); 
     $developpeur = new Developpeur($db);
-    
+    $devComp = new Developpeur_Competence($db);
+    $devEqui = new Developpeur_Equipe($db);
+    $utilisateur = new Utilisateur($db);
+    $devInfos = $developpeur->selectById($_GET['iddev']);
+    $idUtilisateur = $devInfos["idUtilisateur"];
+
     if (isset($_GET['iddev'])) 
     {
+        $exec1 = $devComp->deleteByIdDev($_GET['iddev']);
+        $exec2 = $devEqui->deleteByIdDev($_GET['iddev']);
         $exec = $developpeur->delete($_GET['iddev']);
 
-        if (!$exec) 
+        if (!$exec && !$exec1 && !$exec2) 
         {
             $form['valide'] = false;
             $form['message'] = 'Problème de suppression dans la table développeur';
         }
         else
         {
-            $form['valide'] = true;
+            $exec3 = $utilisateur->delete($idUtilisateur);
+
+            if (!$exec3) {
+                $form['valide'] = false;
+                $form['message'] = 'Problème de suppression dans la table développeur';    
+            }
+            else
+            {
+                $form['valide'] = true;
+            }
         }
 
         $form['message'] = 'Developpeur supprimée avec succès';
     }
 
     $liste = $developpeur->select();
-    echo $twig->render('developpeur.html.twig', array('form'=>$form,'liste'=>$liste));
+    echo $twig->render('developpeur.html.twig', array('form' => $form, 'liste' => $liste));
 }
 
 function actionDeveloppeurAjout($twig, $db) 
 {
     $form = array();
+    $utilisateur = new Utilisateur($db);
     $developpeur = new Developpeur($db);
     $remuneration = new Remuneration($db);
+    $equipe = new Equipe($db);
+    $devEqu = new Developpeur_Equipe($db);
     $role = new Role($db);
     $competence = new Competence($db);
+    $devComp = new Developpeur_Competence($db);
 
     $listeRemuneration = $remuneration->select();
+    $listeEquipe = $equipe->select();
     $listeRole = $role->select();
     $listeCompetence = $competence->select();
 
@@ -42,35 +63,72 @@ function actionDeveloppeurAjout($twig, $db)
     {
         $inputNom = $_POST['inputNom'];
         $inputPrenom = $_POST['inputPrenom'];
-        $inputMail = $_POST['inputMail'];
         $inputIdRemuneration = $_POST['inputIdRemuneration'];
-        $inputIdRole = $_POST['inputIdRole'];
-
+        $inputIdEquipe = $_POST['inputIdEquipe'];
+        $inputEmail = $_POST['inputEmail'];
+        $inputMdp = $_POST['inputMdp'];
+        $inputConfMdp = $_POST['inputConfMdp'];
+        $competences = $_POST['competence'];
         $form['valide'] = true;
-        
-        $exec = $developpeur->insert($inputNom, $inputPrenom, $inputMail, $inputIdRemuneration, $inputIdRole);
-        $lastId = $db->lastInsertId();
 
-        if (!$exec) 
+        if ($inputMdp != $inputConfMdp) 
         {
             $form['valide'] = false;
-            $form['message'] = 'Problème d\'insertion dans la table développeur ';
+            $form['message'] = 'Les mots de passe sont différents';
         }
-        elseif ($lastId != NULL) 
+        else
         {
-            $devComp = new Developpeur_Competence($db);
-            $competences = $_POST['competence'];
+            $exec = $utilisateur->insert($inputEmail, password_hash($inputMdp, PASSWORD_DEFAULT), 3);
+            $lastIdU = $db->lastInsertId();
 
-            foreach ($competences as $comp) 
+            if (!$exec)
             {
-                $exec2 = $devComp->insert($lastId, $comp);
+                $form['valide'] = false;
+                $form['message'] = 'Problème d\'insertion dans la table développeur';
+            }
+
+            if ($lastIdU != NULL) 
+            {
+                $exec2 = $developpeur->insert($inputNom, $inputPrenom, $inputIdRemuneration, $lastIdU);
+                $lastIdD = $db->lastInsertId();
 
                 if (!$exec2) 
                 {
+                    $form['valide'] = false;
+                    $form['message'] = 'Problème d\'insertion dans la table développeur';
+                }
+
+                if ($lastIdD != NULL) 
+                {
+                    foreach ($competences as $comp) 
+                    {
+                        $exec3 = $devComp->insert($lastIdD, $comp);
+
+                        if (!$exec3) 
+                        {
+                            $form['valide'] = false;  
+                            $form['message'] = 'Problème d\'insertion dans la table développeur ';
+                        }
+                    }
+
+                    $exec4 = $devEqu->insert($lastIdD, $inputIdEquipe);
+
+                    if (!$exec4) 
+                    {
+                        $form['valide'] = false;  
+                        $form['message'] = 'Problème d\'insertion dans la table développeur ';
+                    }
+                }
+                else
+                {
                     $form['valide'] = false;  
                     $form['message'] = 'Problème d\'insertion dans la table développeur ';
-                    header("Location:index.php");
                 }
+            }
+            else 
+            {
+                $form['valide'] = false;  
+                $form['message'] = 'Problème d\'insertion dans la table développeur ';
             }
         }
     }
@@ -80,17 +138,17 @@ function actionDeveloppeurAjout($twig, $db)
         $form['liste'] = $liste;
     }
 
-    echo $twig->render('developpeur-ajout.html.twig', array('form' => $form, 'listeRemuneration' => $listeRemuneration, 'listeRole' => $listeRole, 'listeCompetence' => $listeCompetence)); 
+    echo $twig->render('developpeur-ajout.html.twig', array('form' => $form, 'listeRemuneration' => $listeRemuneration, 'listeEquipe' => $listeEquipe, 'listeRole' => $listeRole, 'listeCompetence' => $listeCompetence)); 
 }
 
 function actionDeveloppeurModif($twig, $db) 
 {
     $form = array();
     $remuneration = new Remuneration($db);
-    $role = new Role($db);
+    $equipe = new Equipe($db);
 
     $listeRemuneration = $remuneration->select();
-    $listeRole = $role->select();
+    $listeEquipe = $equipe->select();
 
     if (isset($_GET['iddev'])) 
     {
@@ -112,22 +170,22 @@ function actionDeveloppeurModif($twig, $db)
         $iddev = $_GET['iddev'];  
         $inputNom = $_POST['inputNom'];
         $inputPrenom = $_POST['inputPrenom'];
-        $inputMail = $_POST['inputMail'];
+        $inputEmail = $_POST['inputEmail'];
         $inputIdremuneration = $_POST['inputIdRemuneration'];
-        $inputIdrole = $_POST['inputIdRole'];
+        $inputIdEquipe = $_POST['inputIdEquipe'];
 
         $developpeur = new Developpeur($db);
-        $exec = $developpeur->update($iddev, $inputNom, $inputPrenom, $inputMail, $inputIdremuneration, $inputIdrole);
+        $exec = $developpeur->update($iddev, $inputNom, $inputPrenom, $inputEmail, $inputIdremuneration, $inputIdEquipe);
 
         if (!$exec) 
         {
-          $form['valide'] = false;  
-          $form['message'] = 'Echec de la modification du développeur'; 
+            $form['valide'] = false;  
+            $form['message'] = 'Echec de la modification du développeur';
         }
         else
         {
-            $form['valide'] = true;  
-            $form['message'] = 'Modification du développeur réussie';  
+            $form['valide'] = true;
+            $form['message'] = 'Modification du développeur réussie';
         }
     }
     else
@@ -135,7 +193,7 @@ function actionDeveloppeurModif($twig, $db)
         $form['message'] = 'Développeur non précisé';
     }
 
-    echo $twig->render('developpeur-modif.html.twig', array('form' => $form, 'displayDev' => $displayDev, 'listeRemuneration' => $listeRemuneration, 'listeRole' => $listeRole));
+    echo $twig->render('developpeur-modif.html.twig', array('form' => $form, 'displayDev' => $displayDev, 'listeRemuneration' => $listeRemuneration, 'listeEquipe' => $listeEquipe));
 }
 
 
