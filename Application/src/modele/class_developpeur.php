@@ -16,20 +16,27 @@ class Developpeur
     #region Constructor
     public function __construct($db) {
         $this->db = $db;
-        $this->select = $db->prepare("SELECT iddev, nom, prenom, mail, developpeur.idremu, remuneration.cout_horaire 
-                                    FROM developpeur 
-                                    LEFT JOIN remuneration ON developpeur.idremu = remuneration.idremu
+        $this->select = $db->prepare("SELECT iddev, nom, prenom, ut.email, dev.idremu, re.cout_horaire 
+                                    FROM developpeur dev
+                                    LEFT JOIN remuneration re ON dev.idremu = re.idremu
+                                    LEFT JOIN utilisateur ut ON dev.idUtilisateur = ut.idUtilisateur
+                                    LEFT JOIN role ro ON ut.idrole = ro.idrole
+                                    WHERE ro.idrole = 3
                                     ORDER BY nom");
-        $this->selectById = $db->prepare("SELECT iddev, nom, prenom, mail, developpeur.idremu, developpeur.idrole, remuneration.cout_horaire, role.libelle 
-                                        FROM developpeur 
-                                        LEFT JOIN remuneration ON developpeur.idremu = remuneration.idremu 
-                                        LEFT JOIN role ON developpeur.idrole = role.idrole 
+        $this->selectById = $db->prepare("SELECT iddev, nom, prenom, ut.email, ut.idrole, dev.idremu, re.cout_horaire, ro.libelle
+                                        FROM developpeur dev
+                                        LEFT JOIN remuneration re ON dev.idremu = re.idremu
+                                        LEFT JOIN utilisateur ut ON dev.idUtilisateur = ut.idUtilisateur
+                                        LEFT JOIN role ro ON ut.idrole = ro.idrole
                                         WHERE iddev = :iddev");
         $this->selectCount = $db->prepare("SELECT COUNT(*) FROM developpeur");
-        $this->insert = $db->prepare("INSERT INTO developpeur(nom, prenom, mail, idremu, idrole) VALUES (:nom, :prenom, :mail, :idremu, :idrole)");
-        // $this->insert = $db->prepare("INSERT INTO developpeur(nom, prenom, mail, mdp, idremu, idrole) VALUES (:nom, :prenom, :mail, :mdp, :idremu, :idrole)");
-        $this->update = $db->prepare("UPDATE developpeur SET nom = :nom, prenom = :prenom, mail = :mail, idremu = :idremu, idrole = :idrole WHERE iddev = :iddev");
-        // $this->update = $db->prepare("UPDATE developpeur SET nom=:nom, prenom=:prenom, mail=:mail, mdp=:mdp, idremu=:idremu, idrole=:idrole WHERE iddev=:iddev");
+        // $this->insert = $db->prepare("INSERT INTO developpeur(nom, prenom, mail, idremu, idrole) VALUES (:nom, :prenom, :mail, :idremu, :idrole)");
+        $this->insert = $db->prepare("INSERT INTO developpeur(nom, prenom, idremu) VALUES (:nom, :prenom, :idremu)");
+        // $this->update = $db->prepare("UPDATE developpeur SET nom = :nom, prenom = :prenom, mail = :mail, idremu = :idremu, idrole = :idrole WHERE iddev = :iddev");
+        $this->update = $db->prepare("UPDATE developpeur AS dev
+                                    INNER JOIN utilisateur ut ON dev.idUtilisateur = ut.idUtilisateur
+                                    SET dev.nom = :nom, dev.prenom = :prenom, ut.email = :email, dev.idremu = :idremu, ut.idrole = :idrole
+                                    WHERE dev.iddev = :iddev");
         $this->delete = $db->prepare("DELETE FROM developpeur WHERE iddev = :iddev");
     }
     #endregion
@@ -71,15 +78,13 @@ class Developpeur
        return $this->selectCount->fetchColumn();
     }
 
-    public function insert($nom, $prenom, $mail, $idremu, $idrole) 
+    public function insert($nom, $prenom, $idremu) 
     {
         $r = true;
 
         $this->insert->bindValue(':nom', $nom, PDO::PARAM_STR);
         $this->insert->bindValue(':prenom', $prenom, PDO::PARAM_STR);
-        $this->insert->bindValue(':mail', $mail, PDO::PARAM_STR);
         $this->insert->bindValue(':idremu', $idremu, PDO::PARAM_STR);
-        $this->insert->bindValue(':idrole', $idrole, PDO::PARAM_STR);
         $this->insert->execute();
 
         if ($this->insert->errorCode() != 0) 
@@ -91,11 +96,11 @@ class Developpeur
         return $r;
     }
 
-    public function update($iddev, $nom, $prenom, $mail, $idremu, $idrole) 
+    public function update($iddev, $nom, $prenom, $email, $idremu, $idrole) 
     {
         $r = true;
 
-        $this->update->execute(array(':iddev' => $iddev, ':nom' => $nom, ':prenom' => $prenom, ':mail' => $mail, 'idremu' => $idremu, 'idrole' => $idrole));
+        $this->update->execute(array(':iddev' => $iddev, ':nom' => $nom, ':prenom' => $prenom, ':email' => $email, 'idremu' => $idremu, 'idrole' => $idrole));
         
         if ($this->update->errorCode() != 0)
         {

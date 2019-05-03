@@ -45,7 +45,7 @@
             </div>
             <div class="p-2 bg-teal white media-body">
               <h5>Commandes totales</h5>
-              <h5 class="text-bold-400">4,65,879</h5>
+              <h5 class="text-bold-400">{{ contCount }}</h5>
             </div>
           </div>
         </div>
@@ -118,7 +118,7 @@
                     </span>
                     <span>{{ p.Equipe }}</span>
                   </td>
-                  <td class="text-truncate"><span class="tag tag-{{ p.CouleurPrio }}">{{ p.Priorité }}</span></td>
+                  <td class="text-truncate"><span class="tag tag-{{ p.CouleurPrio }}">{{ p.Priorite }}</span></td>
                   <td class="valign-middle">
                     <progress value="{{ p.Progression }}" max="100" class="progress progress-xs progress-{{ p.CouleurProgr }} m-0">{{ p.Progression }}%</progress>
                   </td>

@@ -4,12 +4,14 @@ function actionDeveloppeur($twig, $db)
 {
     $form = array(); 
     $developpeur = new Developpeur($db);
-    
+    $devComp = new Developpeur_Competence($db);
+
     if (isset($_GET['iddev'])) 
     {
+        $exec1 = $devComp->deleteByIdDev($_GET['iddev']);
         $exec = $developpeur->delete($_GET['iddev']);
 
-        if (!$exec) 
+        if (!$exec && !$exec1) 
         {
             $form['valide'] = false;
             $form['message'] = 'Problème de suppression dans la table développeur';
@@ -23,7 +25,7 @@ function actionDeveloppeur($twig, $db)
     }
 
     $liste = $developpeur->select();
-    echo $twig->render('developpeur.html.twig', array('form'=>$form,'liste'=>$liste));
+    echo $twig->render('developpeur.html.twig', array('form' => $form, 'liste' => $liste));
 }
 
 function actionDeveloppeurAjout($twig, $db) 
@@ -42,13 +44,11 @@ function actionDeveloppeurAjout($twig, $db)
     {
         $inputNom = $_POST['inputNom'];
         $inputPrenom = $_POST['inputPrenom'];
-        $inputMail = $_POST['inputMail'];
         $inputIdRemuneration = $_POST['inputIdRemuneration'];
-        $inputIdRole = $_POST['inputIdRole'];
 
         $form['valide'] = true;
         
-        $exec = $developpeur->insert($inputNom, $inputPrenom, $inputMail, $inputIdRemuneration, $inputIdRole);
+        $exec = $developpeur->insert($inputNom, $inputPrenom, $inputIdRemuneration);
         $lastId = $db->lastInsertId();
 
         if (!$exec) 
@@ -58,6 +58,13 @@ function actionDeveloppeurAjout($twig, $db)
         }
         elseif ($lastId != NULL) 
         {
+            $inputEmail = $_POST['inputEmail'];
+            $inputPassword = $_POST['inputPassword'];
+            $inputIdRole = $_POST['inputIdRole'];
+
+            $utilisateur = new Utilisateur($db);
+            $utilisateur->insert($inputEmail, password_hash($inputPassword, PASSWORD_DEFAULT), $inputIdRole);
+
             $devComp = new Developpeur_Competence($db);
             $competences = $_POST['competence'];
 
@@ -121,13 +128,13 @@ function actionDeveloppeurModif($twig, $db)
 
         if (!$exec) 
         {
-          $form['valide'] = false;  
-          $form['message'] = 'Echec de la modification du développeur'; 
+            $form['valide'] = false;  
+            $form['message'] = 'Echec de la modification du développeur';
         }
         else
         {
-            $form['valide'] = true;  
-            $form['message'] = 'Modification du développeur réussie';  
+            $form['valide'] = true;
+            $form['message'] = 'Modification du développeur réussie';
         }
     }
     else

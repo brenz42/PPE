@@ -541,7 +541,7 @@ button:focus {
   .header-navbar.navbar-without-dd-arrow .nav-link.dropdown-toggle::after {
     display: none; }
   .header-navbar.navbar-light {
-    background-image: linear-gradient(to left, #9575CD , #673AB7); }
+    background-color: #673AB7; }
     .header-navbar.navbar-light.navbar-horizontal {
       background: #FFFFFF; }
     .header-navbar.navbar-light .navbar-nav li {

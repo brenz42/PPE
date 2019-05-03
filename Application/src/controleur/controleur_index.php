@@ -79,12 +79,23 @@ function actionConnexion($twig, $db)
             } 
             else
             {
-                $displayUtilisateur = $utilisateur->selectByEmail($inputEmail);
-                
-                $_SESSION['nom'] = $displayUtilisateur['nom'];
-                $_SESSION['prenom'] = $displayUtilisateur['prenom'];
                 $_SESSION['login'] = $inputEmail;
                 $_SESSION['role'] = $unUtilisateur['idrole'];
+                $_SESSION['idUtilisateur'] = $unUtilisateur['idUtilisateur'];
+
+                if ($unUtilisateur['idrole'] == 2) 
+                {
+                    $ent = new Entreprise_Cliente($db);
+                    $entInfos = $ent->selectById($_SESSION['idUtilisateur']);
+                    $_SESSION['nom'] = $entInfos['nom'];
+                }
+                elseif ($unUtilisateur['idrole'] == 3 || $unUtilisateur['idrole'] == 4) 
+                {
+                    $dev = new Developpeur($db);
+                    $devInfos = $dev->selectById($_SESSION['idUtilisateur']);
+                    $_SESSION['nom'] = $devInfos['nom'];
+                    $_SESSION['prenom'] = $devInfos['prenom'];
+                }
 
                 header("Location:index.php");
             }
@@ -92,7 +103,7 @@ function actionConnexion($twig, $db)
         else 
         {
             $form['valide'] = false;
-            $form['message'] = 'Login ou mot de passe incorrect';
+            $form['message'] = 'Problème d\'authentification';
         }
     }
 
@@ -116,9 +127,9 @@ function actionInscription($twig, $db)
         $inputEmail = $_POST['inputEmail'];
         $inputPassword = $_POST['inputPassword'];
         $inputPassword2 = $_POST['inputPassword2'];
-        $nom = $_POST['nom'];
-        $prenom = $_POST['prenom'];
-        $role = 2; // Signifie que par défaut, une personne est un simple utilisateur
+        $inputNom = $_POST['inputNom'];
+        $inputPrenom = $_POST['inputPrenom'];
+        $inputRole = 2; // Signifie que par défaut, une personne est une entreprise cliente
         $form['valide'] = true;
 
         if ($inputPassword != $inputPassword2) 
@@ -129,7 +140,7 @@ function actionInscription($twig, $db)
         else 
         {
             $utilisateur = new Utilisateur($db);
-            $exec = $utilisateur->insert($inputEmail, password_hash($inputPassword, PASSWORD_DEFAULT), $role, $nom, $prenom);
+            $exec = $utilisateur->insert($inputEmail, password_hash($inputPassword, PASSWORD_DEFAULT), $inputRole, $inputNom, $inputPrenom);
 
             if (!$exec) 
             {
@@ -151,7 +162,7 @@ function actionInscription($twig, $db)
         }
 
         $form['email'] = $inputEmail;
-        $form['role'] = $role;
+        $form['role'] = $inputRole;
     }
 
     echo $twig->render('inscription.html.twig', array('form' => $form));
@@ -159,7 +170,32 @@ function actionInscription($twig, $db)
 
 function actionProfil($twig, $db)
 {
-    
+    // // 0 : Utilisateur / 1 : Administrateur / 2 : Entreprise cliente / 3 : Développeur
+    // if ($_SESSION['role'] = 0) 
+    // {
+        
+    // }
+    // elseif ($_SESSION['role'] = 1) 
+    // {
+        
+    // }
+    // elseif ($_SESSION['role'] = 2) 
+    // {
+        
+    // }
+    // elseif ($_SESSION['role'] = 3) 
+    // {
+    //     $dev = new Developpeur($db);
+    //     $devComp = new Developpeur_Competence($db);
+    //     $devEqui = new Developpeur_Equipe($db);
+
+    //     $comp = $devComp->selectByIdDev()
+    // }
+    // else 
+    // {
+    //     // Un problème est survenu et tu fermes ta gueule !
+    // }
+
     echo $twig->render('profil.html.twig', array());
 }
 

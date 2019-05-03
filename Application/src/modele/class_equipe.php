@@ -23,7 +23,7 @@ class Equipe{
         $this->selectByIdRespAndLibelle = $db->prepare("SELECT idequi FROM equipe WHERE idresp=:idresp AND libelle=:libelle");
         $this->selectCount = $db->prepare("SELECT COUNT(*) FROM equipe");
         $this->insert = $db->prepare("INSERT INTO equipe(libelle, idresp) VALUES (:libelle, :idresp)");
-        $this->update = $db->prepare("UPDATE equipe SET libelle=:libelle, idresp=:idresp WHERE idresp=:idresp"); 
+        $this->update = $db->prepare("UPDATE equipe SET libelle=:libelle, idresp=:idresp WHERE idequi=:idequi"); 
         $this->delete = $db->prepare("DELETE FROM equipe WHERE idequi=:idequi");
     }
     #endregion

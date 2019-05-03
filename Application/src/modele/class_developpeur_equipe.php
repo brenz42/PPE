@@ -52,9 +52,9 @@ class Developpeur_Equipe{
         return $r;
     }
 
-    public function update($iddev, $idequi){
+    public function update($idequi, $iddev){
         $r=true;
-        $this->update->execute(array(':iddev'=>$iddev, ':idequi'=>$idequi));
+        $this->update->execute(array(':idequi'=>$idequi,':iddev'=>$iddev));
         if($this->update->errorCode()!=0){
             $r=false;
         }

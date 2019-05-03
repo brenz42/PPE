@@ -81,7 +81,8 @@ function actionEquipeModif($twig, $db)
     {
         $equipe = new Equipe($db);
         $uneEquipe = $equipe->selectById($_GET['id']);
-
+        $test = $_GET['id'];
+        $form['id'] = $test;
         if ($uneEquipe != null) 
         {
             $form['equipe'] = $uneEquipe;

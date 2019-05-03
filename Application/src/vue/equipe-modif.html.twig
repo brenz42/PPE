@@ -8,7 +8,7 @@
     {% if form.equipe != null %}    
         <div class="panel-body">
         <form  class="form-signin" action="index.php?page=equipemodif" method="post" enctype="application/x-www-form-urlencoded">
-        <input type="hidden" id="id" name="id" value="{{form.equipe.id}}"/> 
+        <input type="hidden" id="id" name="id" value="{{form.equipe.idequi}}"/>
         <label for="inputDesignation" class="sr-only">Libellé:</label>
         <input type="text" id="inputLibelle" name="inputLibelle" class="form-control" placeholder="Saisir un libellé" value="{{form.equipe.libelle}}" required autofocus>
         <label for="inputIdResponsable" class="sr-only">Responsable:</label>
@@ -19,14 +19,14 @@
              <option value="non">Responsable non identifié</option>
         {% endif %}      
         {% for u in form.liste %}
-            {% if form.equipe.idresponsable == u.email %}  
-                <option value="{{ u.email }}" selected>{{ u.nom }} {{ u.prenom }}</option> 
+            {% if form.equipe.idresp == u.iddev %}  
+                <option value="{{ u.iddev }}" selected>{{ u.nom }} {{ u.prenom }}</option> 
             {% else %} 
-                <option value="{{ u.email }}">{{ u.nom }} {{ u.prenom }}</option>
+                <option value="{{ u.iddev }}">{{ u.nom }} {{ u.prenom }}</option>
             {% endif %}      
         {% endfor%}    
         </select>    
-        <button class="btn btn-lg btn-primary btn-block" type="submit" name="btModifier">Ajouter</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" name="btModifier">Modifier</button>
         </form>
         </div> 
     {% else %}  
@@ -39,7 +39,7 @@
         {% endif %} 
     {% endif %} 
 {% else %} 
-     <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1> 
+     <h1 class="success success-danger" role="alert">{{ form.message }}</h1> 
      <h1 class="h3 mb-3 font-weight-normal"><a href="index.php?page=equipe" class="violet">Retourner sur la liste des équipes</a></h1>
        
 {% endif %}
