@@ -37,6 +37,17 @@ function getPage($db)
   $lesPages['remunerationws'] = "actionRemunerationWS;0";
 
 
+  $lesPages['projet'] = "actionProjet;1";
+  $lesPages['projetajout'] = "actionProjetAjout;1";
+  $lesPages['projetmodif'] = "actionProjetModif;1";
+  //$lesPages['projetws'] = "actionProjetWS;0";
+
+  $lesPages['contrat'] = "actionContrat;1";
+  $lesPages['contratajout'] = "actionContratAjout;1";
+  //$lesPages['projetmodif'] = "actionProjetModif;1";
+  //$lesPages['projetws'] = "actionProjetWS;0";
+
+
   if ($db != null) 
   {
     if (isset($_GET['page'])) 

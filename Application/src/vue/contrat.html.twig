@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Gestion des Contrats {% endblock %}
+
+{% block contenu %}
+
+{% if form.valide is defined %}
+{% if form.valide == true %}
+<h1 class="h3 mb-3 font-weight-normal">{{ form.message }}</h1>
+{% else %}
+<h1 class="alert alert-danger" role="alert">{{ form.message }}</h1>
+{% endif %}
+{% endif %}
+
+<h1 class="ppe-h1-listing"> Gestion des Contrats </h1>
+<a class="btn btn-green btn-min-width mr-1 mb-1 float-xs-right" href="index.php?page=contratajout" role="button">
+    <i class="icon-plus3"></i> Ajouter
+</a>
+
+<div class="panel">
+    <!-- Default panel contents -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="table-responsive ppe-table-responsive">
+                <table id="table" class="table table-hover table-striped table-bordered text-xs-center">
+                    <thead class="bg-primary">
+                        <tr class="text-uppercase white">
+                            <th class="no-filter">Date debut</th>
+                            <th class="no-filter">Date de fin </th>
+                            <th class="no-filter">date de signature </th>
+                            <th class="no-filter">Cout</th>
+                            <th class="no-filter">Actions</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in liste %}
+                        <tr>
+                            <td>
+                                {{ c.date_debut }}
+                            </td>
+                            <td>
+                                {{ c.date_fin }}
+                            </td>
+                            <td>
+                                {{ c.date_signature }}
+                            </td>
+                           
+                            <td>
+                                {{ c.cout_global }}
+                            </td>
+
+                            <td>
+
+                                <a class="btn btn-info btn-min-width mr-1 mb-1"
+                                    href="index.php?page=contratmodif&idcontrat={{ c.contrat }}" role="button">
+                                    <i class="icon-edit2"></i> Voir
+                            
+                                
+                                <a class="btn btn-danger btn-min-width mr-1 mb-1"
+                                    href="index.php?page=contrat&idcontrat={{ c.idcontrat }}" role="button">
+                                    <i class="icon-trash-o"></i> Supprimer
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

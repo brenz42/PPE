@@ -1,0 +1,89 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Ajout d'un contrat  {% endblock %}
+
+{% block contenu %}
+
+{% if form.valide is defined %}
+    {% if form.valide == true %}
+        <h1 class="h3 mb-3 font-weight-normal">Ajout réussi</h1>
+    {% else %}
+        <h1 class="h3 mb-3 font-weight-normal">{{ form.valide.message }}</h1>
+    {% endif %}
+{% else %}
+    <div class="content-body">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-form-center">Ajout d'un Contrat </h4>
+                    </div>
+                    <div class="card-body collapse in">
+                        <div class="card-block">
+
+                            <div class="card-text">
+                                <p>Renseignez les champs suivants afin d'ajouter un contrat  dans la base de données.</p>
+                            </div>
+
+                            <form class="form" action="index.php?page=contratajout" method="post" enctype="application/x-www-form-urlencoded">
+                                <div class="row">
+                                    <div class="col-md-6 offset-md-3">
+                                        <div class="form-body">
+                                            <div class="form-group">
+                                                <label for="inputLibelle" class="sr-only">Date de debut </label>
+                                                <input type="text" id="inputLibelle" class="form-control" placeholder="Date de debut"
+                                                    name="inputDate_debut" required autofocus>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="inputVersion" class="sr-only">Date de fin </label>
+                                                <input type="text" id="inputVersion" class="form-control" placeholder="Date de fin "
+                                                    name="inputDate_fin" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="inputVersion" class="sr-only">Date de signature</label>
+                                                <input type="text" id="inputVersion" class="form-control" placeholder="Date de signature"
+                                                    name="inputDate_signature" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="inputVersion" class="sr-only">Cout global</label>
+                                                <input type="text" id="inputVersion" class="form-control" placeholder="Cout Global "
+                                                    name="inputCout_global" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="inputIdent" class="sr-only">Entreprise</label>
+                                                <select name="inputIdent" class="form-control">
+                                                    <option value="none" selected="" disabled="">Entreprise</option> 
+                                                    {% for ent in listeEntreprise %}
+                                                        <option value="{{ ent.ident }}">{{ ent.nom }}</option> 
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions center">
+                                    <button type="button" class="btn btn-danger mr-1">
+                                        <a href="index.php?page=contrat" class="ppe-btn-link">
+                                            <i class="icon-cross2"></i> Annuler
+                                        </a>
+                                    </button>
+                                    <button type="submit" name="btAjouter" class="btn btn-primary">
+                                        <span><i class="icon-check2"></i> Ajouter</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}

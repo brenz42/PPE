@@ -31,7 +31,7 @@ class Tache
         $this->insert = $db->prepare("INSERT INTO tache(libelle, etat, cout, idprojet) VALUES (:libelle, :etat, :cout, :idprojet)");
         $this->update = $db->prepare("UPDATE libelle SET libelle = :libelle, etat = :etat, cout = :cout, idprojet = :idprojet WHERE idtache = :idtache");
         $this->delete = $db->prepare("DELETE FROM tache WHERE idtache = :idtache");
-    }
+        $this->deleteByIdProjet = $db->prepare("DELETE FROM tache WHERE tache.idprojet = :idprojet");   }
     #endregion
 
     #region Functions
@@ -135,6 +135,20 @@ class Tache
         if ($this->delete->errorCode() != 0) 
         {
             print_r($this->delete->errorInfo());
+            $r = false;
+        }
+
+        return $r;
+    }
+
+    public function deleteByIdProjet($idprojet)
+    {
+        $r = true;
+        $this->deleteByIdProjet->execute(array(':idprojet' => $idprojet));
+
+        if ($this->deleteByIdProjet->errorCode() != 0) 
+        {
+            print_r($this->deleteByIdProjet->errorInfo());
             $r = false;
         }
 

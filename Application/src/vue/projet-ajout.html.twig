@@ -1,0 +1,117 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Ajout d'un projet {% endblock %}
+
+{% block contenu %}
+
+{% if form.valide is defined %}
+{% if form.valide == true %}
+<h1 class="h3 mb-3 font-weight-normal">Ajout réussi</h1>
+{% else %}
+<h1 class="h3 mb-3 font-weight-normal">{{ form.valide.message }}</h1>
+{% endif %}
+{% else %}
+
+
+<div class="content-body">
+    <div class="row match-height">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" id="basic-layout-form-center">Ajout d'un projet</h4>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+
+                        <div class="card-text">
+                            <p>Renseignez les champs suivants afin d'ajouter un projet dans la base de données.</p>
+                        </div>
+
+                        <form class="form" action="index.php?page=projetajout" method="post"
+                            enctype="application/x-www-form-urlencoded">
+                            <div class="row">
+                                <div class="col-md-6 offset-md-3">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <label for="inputLibelle" class="sr-only">Libellé</label>
+                                            <input type="text" id="inputLibelle" class="form-control"
+                                                placeholder="Libellé" name="inputLibelle" required autofocus>
+                                        </div>
+
+                                       
+
+                                        <div class="form-group">
+                                            <label for="inputIdent" class="sr-only">Actif</label>
+                                            <select name="inputIdActif" class="form-control">
+                                                <option value="none" selected="" disabled="">Actif</option> 
+                                                    <option value="0">non actif </option>
+                                                <option value="1"> actif</option> 
+                                            </select>
+                                        </div>
+
+
+
+                                        <div class="form-group">
+                                            <label for="inputIdent" class="sr-only">Priorite</label>
+                                            <select name="inputIdpriorite" class="form-control">
+                                                    <option selected disabled>Priorite</option> 
+                                                    <option value="1">basse </option>
+                                                    <option value="2">moyen</option>
+                                                    <option value="3">critique</option>  
+                                            </select>
+                                        </div>
+                                    
+                                        <div class="form-group">
+                                            <label for="inputIdent" class="sr-only">Progression</label>
+                                            <select name="inputIdprogression" class="form-control">
+                                                    <option selected disabled>Progression</option> 
+                                                    <option value="4">0 </option>
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="inputIdContrat" class="sr-only">Equipe</label>
+                                            <select name="inputIdequi" class="form-control">
+                                                <option value="none" selected="" disabled="">Equipe</option> 
+                                                {% for equi in listeEquipe %}
+                                                    <option value="{{ equi.idequi }}">{{ equi.libelle }}</option> 
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="inputIdContrat" class="sr-only">Numéro du contrat</label>
+                                            <select name="inputIdcontrat" class="form-control">
+                                                <option value= selected= disabled>Numéro du contrat</option>
+                                                {% for c in listeContrat %}
+                                                    <option value="{{ c.idcontrat }}"> {{c.idcontrat}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="form-actions center">
+                    <button type="button" class="btn btn-danger mr-1">
+                        <a href="index.php?page=projet" class="ppe-btn-link">
+                            <i class="icon-cross2"></i> Annuler
+                        </a>
+                    </button>
+                    <button type="submit" name="btAjouter" class="btn btn-primary">
+                        <span><i class="icon-check2"></i> Ajouter</span>
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
