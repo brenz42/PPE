@@ -101,7 +101,7 @@ function actionProjetModif($twig,$db)
         }
     }
     
-        if(isset($_POST['btModifier']))
+        if (isset($_POST['btModifier']))
         {
             $idProjet = $_GET['idprojet'];
             $inputLibelle = $_POST['inputLibelle'];
