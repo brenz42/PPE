@@ -114,7 +114,7 @@ function actionProjetModif($twig,$db)
             $projet = new Projet($db);
             $exec = $projet->update($idProjet, $inputLibelle, $inputActif, $inputIdpriorite, $inputIdprogression, $inputIdequi, $inputIdcontrat);
 
-            if(!$exec)
+            if (!$exec)
             {
                 $form['valide'] = false ;
                 $form['message'] = 'Echec de la modification du Projet';
