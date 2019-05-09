@@ -15,12 +15,9 @@ function actionContrat($twig,$db)
 
         $unProject = $projet->selectByIdContrat($idcont);
     
-        var_dump($unProject);
+        //var_dump($unProject);
 
-                // $tache->deleteByIdProjet($unProject["idprojet"]);
-                // $projet->delete($unProject["idprojet"]);
-        
-
+    
        
         $exec=$contrat->delete($_GET['idcontrat']);
 
