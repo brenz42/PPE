@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %} {{ parent() }} - Gestion des développeurs {% endblock %}
+{% block title %} {{ parent() }} - Gestion des Entreprises Clientes  {% endblock %}
        
 {% block contenu %}
 
@@ -12,8 +12,8 @@
     {% endif %}         
 {% endif %}         
 
-<h1 class="ppe-h1-listing"> Gestion des développeurs </h1>
-<a class="btn btn-green btn-min-width mr-1 mb-1 float-xs-right" href="index.php?page=developpeurajout"
+<h1 class="ppe-h1-listing"> Gestion des Entreprises Clientes  </h1>
+<a class="btn btn-green btn-min-width mr-1 mb-1 float-xs-right" href="index.php?page=entreprise_clienteajout"
     role="button">
     <i class="icon-plus3"></i> Ajouter
 </a>
@@ -28,34 +28,38 @@
                         <tr class="text-uppercase white">
                             <th class="no-filter">Nom</th>
                             <th class="no-filter">Adresse</th>
-                            <th class="no-filter">Code Postal</th>
                             <th class="no-filter">Ville</th>
+                            <th class="no-filter">Code Postal</th>
                             <th class="nothing">Contact</th>
+                            <th class="nothing">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for ec in liste %}
                         <tr>
                             <td>
-                                {{ ec.nom }}
+                                 {{ ec.nom }}
                             </td>
                             <td>
                                 {{ ec.adresse }}
                             </td>
                             <td>
-                                {{ ec.codep }}
-                            </td>
-                            <td>
                                 {{ ec.ville }}
                             </td>
                             <td>
+                                {{ ec.codep }}
+                            </td>
+                            <td>
+                                {{ ec.contact }}
+                            </td>
+                            <td>
                                 <a class="btn btn-info btn-min-width mr-1 mb-1" 
-                                    href="index.php?page=entreprise_clientemodif&ident={{ d.ident }}"
+                                    href="index.php?page=entreprise_cliente_modif&ident={{ ec.ident }}"
                                     role="button">
                                     <i class="icon-edit2"></i> Modifier
                                 </a>
                                 <a class="btn btn-danger btn-min-width mr-1 mb-1" 
-                                    href="index.php?page=entreprise_cliente&iddev={{ d.ident }}"
+                                    href="index.php?page=entreprise_cliente&ident={{ ec.ident }}"
                                     role="button">
                                     <i class="icon-trash-o"></i> Supprimer
                                 </a>

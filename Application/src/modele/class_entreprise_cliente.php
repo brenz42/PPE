@@ -65,6 +65,8 @@ class Entreprise_Cliente
         $this->insert->bindValue(':ville', $ville, PDO::PARAM_STR);
         $this->insert->bindValue(':codep', $codep, PDO::PARAM_STR);
         $this->insert->bindValue(':contact', $contact, PDO::PARAM_STR);
+        
+
 
         $this->insert->execute();
 

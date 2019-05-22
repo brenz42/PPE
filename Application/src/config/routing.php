@@ -36,6 +36,9 @@ function getPage($db)
   $lesPages['remunerationmodif'] = "actionRemunerationModif;1";
   $lesPages['remunerationws'] = "actionRemunerationWS;0";
 
+  $lesPages['entreprise_cliente'] = "actionEntrepriseCliente;1";
+  $lesPages['entreprise_clienteajout'] = "actionEntrepriseClienteAjout;1";
+  $lesPages['entreprise_cliente_modif'] = "actionEntrepriseClienteModif;1";
 
   $lesPages['projet'] = "actionProjet;1";
   $lesPages['projetajout'] = "actionProjetAjout;1";
@@ -46,6 +49,11 @@ function getPage($db)
   $lesPages['contratajout'] = "actionContratAjout;1";
   //$lesPages['projetmodif'] = "actionProjetModif;1";
   //$lesPages['projetws'] = "actionProjetWS;0";
+
+  $lesPages['tache'] = "actionTache;1";
+  $lesPages['tacheByProjet'] = "actionTacheByProj;1";
+  $lesPages['tacheAjout'] = "actionTacheAjout;1";
+  $lesPages['tacheModif'] = "actionTacheModif;1";
 
 
   if ($db != null) 

@@ -9,5 +9,8 @@ require_once 'controleur_developpeur.php';
 require_once 'controleur_developpeur_competence.php';
 require_once 'controleur_projet.php';
 require_once 'controleur_contrat.php';
+require_once 'controleur_entreprise_cliente.php';
+
+
 
 ?>

@@ -1,0 +1,96 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Modification  d'une entreprise cliente  {% endblock %}
+
+{% block contenu %}
+
+{% if form.valide is defined %}
+{% if form.valide == true %}
+<h1 class="h3 mb-3 font-weight-normal">Modification réussi</h1>
+{% else %}
+<h1 class="h3 mb-3 font-weight-normal">{{ form.valide.message }}</h1>
+{% endif %}
+{% else %}
+
+
+<div class="content-body">
+    <div class="row match-height">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" id="basic-layout-form-center">Modification d'une entreprise cliente </h4>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+
+                        <div class="card-text">
+                            <p>Renseignez les champs suivants afin d'ajouter une entreprise cliente dans la base de données.</p>
+                        </div>
+
+                         <form class="form" action="index.php?page=entreprise_cliente_modif&ident={{ liste.ident }}" method="post"   enctype="application/x-www-form-urlencoded">
+
+
+                         {# <form class="form" action="index.php?page=entreprise_cliente_modif" method="post" enctype="application/x-www-form-urlencoded"> #}
+                            <div class="row">
+                                <div class="col-md-6 offset-md-3">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <label for="inputLibelle" class="sr-only">Nom</label>
+                                            <input type="text" id="inputLibelle" class="form-control"
+                                                placeholder="Nom" value="{{liste.nom}}" name="inputnom" required autofocus>
+                                        </div>
+
+                                        {# <div style="display: none" class="form-group">
+                                            <label for="inputLibelle" class="sr-only">id</label>
+                                            <input type="text" id="inputLibelle" class="form-control"
+                                                placeholder="Nom" value="{{liste.ident}}" name="inputid"  required autofocus readonly>
+                                        </div> #}
+                                        
+                                    
+                                        <div class="form-group">
+                                            <label for="inputIdent" class="sr-only">adresse</label>
+                                            <input type="text" id="inputLibelle" class="form-control"
+                                                placeholder="Adresse" value="{{liste.adresse}}"name="inputadresse" required autofocus>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputIdent" class="sr-only">ville</label>
+                                            <input type="text" id="inputLibelle" class="form-control"
+                                            placeholder="Ville" value="{{liste.ville}}" name="inputville" required autofocus>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputIdent" class="sr-only">code postal</label>
+                                            <input type="text" id="inputLibelle" class="form-control"
+                                                placeholder="Code Postal" value="{{liste.codep}}"name="inputcodep" required autofocus>
+                                        </div>
+
+                                        
+                                        <div class="form-group">
+                                            <label for="inputIdent" class="sr-only">contact</label>
+                                            <input type="text" id="inputLibelle" class="form-control"
+                                                placeholder="Contact" value="{{liste.contact}}" name="inputcontact" required autofocus>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="form-actions center">
+                    <button type="button" class="btn btn-danger mr-1">
+                            <i class="icon-cross2"></i> Annuler
+                        </a>
+                    </button>
+                    <button type="submit" name="btModifier" class="btn btn-primary">
+                        <span><i class="icon-check2"></i> Modifier</span>
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

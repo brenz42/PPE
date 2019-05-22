@@ -1,0 +1,88 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Ajout d'une entreprise cliente  {% endblock %}
+
+{% block contenu %}
+
+{% if form.valide is defined %}
+{% if form.valide == true %}
+<h1 class="h3 mb-3 font-weight-normal">Ajout réussi</h1>
+{% else %}
+<h1 class="h3 mb-3 font-weight-normal">{{ form.valide.message }}</h1>
+{% endif %}
+{% else %}
+
+
+<div class="content-body">
+    <div class="row match-height">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" id="basic-layout-form-center">Ajout d'une entreprise cliente </h4>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+
+                        <div class="card-text">
+                            <p>Renseignez les champs suivants afin d'ajouter une entreprise cliente  dans la base de données.</p>
+                        </div>
+
+                        <form class="form" action="index.php?page=entreprise_clienteajout" method="post" enctype="application/x-www-form-urlencoded">
+                            <div class="row">
+                                <div class="col-md-6 offset-md-3">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <label for="inputnom" class="sr-only">Nom</label>
+                                            <input type="text" id="inputnom" class="form-control" placeholder="Nom"
+                                                name="inputnom" required autofocus>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputadresse" class="sr-only">Adresse</label>
+                                            <input type="text" id="inputadresse" class="form-control" placeholder="Prenom"
+                                                name="inputadresse" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputville" class="sr-only">Ville</label>
+                                            <input type="text" id="inputville" class="form-control" placeholder="Ville"
+                                                name="inputville" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                                <label for="inputcodep" class="sr-only">Code Postal </label>
+                                                <input type="text" id="inputcodep" class="form-control" placeholder="Code Postal"
+                                                    name="inputcodep" required>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                                <label for="iinputcontact" class="sr-only">Contact </label>
+                                                <input type="text" id="inputcontact" class="form-control" placeholder="Adresse mail"
+                                                    name="inputcontact" required>
+                                        </div>
+
+                                       
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions center">
+                                <button type="button" class="btn btn-danger mr-1">
+                                    <a href="index.php?page=entreprise_cliente" class="ppe-btn-link">
+                                        <i class="icon-cross2"></i> Annuler
+                                    </a>
+                                </button>
+                                <button type="submit" name="btAjouter" class="btn btn-primary">
+                                    <span><i class="icon-check2"></i> Ajouter</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
